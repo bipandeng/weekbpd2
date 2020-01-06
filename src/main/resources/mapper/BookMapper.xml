@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bipandeng.mapper.BookMapper">
+	<!-- 添加数据 -->
+	<insert id="addBook" parameterType="com.bipandeng.bean.Book">
+		insert into book(bid, bname,
+		bdesc, bcname, product, address, price,
+		bctime,bjtime,log)
+		values(#{bid},#{bname},#{bdesc},#{bcname},#{product},#{address},#{price},#{bctime},#{bjtime},#{log})
+	</insert>
+	<!-- 查询 -->
+	<select id="queryBook" resultType="com.bipandeng.bean.Book">
+		select * from book
+		<where>
+			<if test="bid!=null and bid!=''">
+				and bid like "%${bid}%"
+			</if>
+			<if test="bname!=null and bname!=''">
+				and bname like "%${bname}%"
+			</if>
+			<if test="bdesc!=null and bdesc!=''">
+				and bdesc like "%${bdesc}%"
+			</if>
+			<if test="bcname!=null and bcname!=''">
+				and bcname like "%${bcname}%"
+			</if>
+			<if test="product!=null and product!=''">
+				and product like "%${product}%"
+			</if>
+			<if test="address!=null and address!=''">
+				and address like "%${address}%"
+			</if>
+			<if test="price!=null and price!=''">
+				and price like "%${price}%"
+			</if>
+			<if test="status!=null and status!=''">
+				and status like "%${status}%"
+			</if>
+			<if test="s1!=null and s1!='' and e1!=null and e1!='' ">
+				and bctime between #{s1} and #{e1}
+			</if>
+			<if test="s2!=null and s2!='' and e2!=null and e2!='' ">
+				and bjtime between #{s2} and #{e3}
+			</if>
+		</where>
+	</select>
+	<!-- 查询一个 -->
+	<select id="showBookOne" parameterType="int" resultType="com.bipandeng.bean.Book">
+		select *
+		from book where bid =#{bid}
+	</select>
+	<!-- 修改 -->
+	<update id="updBook" parameterType="com.bipandeng.bean.Book">
+		update book set
+		bid=#{bid},bname=#{bname},bdesc=#{bdesc},bcname=#{bcname},product=#{product},address=#{address},price=#{price},bctime=#{bctime},bjtime=#{bjtime},status=#{status},log=#{log}
+		where bid =#{bid}
+	</update>
+</mapper>
